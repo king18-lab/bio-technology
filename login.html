@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biotech Login</title>
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+/* BODY */
+body{
+min-height:100vh;
+background:#0b0b0b;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+/* LOGIN CARD */
+.login-wrapper{
+width:100%;
+max-width:450px;
+background:white;
+border-radius:14px;
+padding:40px;
+box-shadow:0 25px 60px rgba(0,0,0,.5);
+}
+
+/* BACK BUTTON */
+.back-home{
+display:inline-block;
+margin-bottom:15px;
+text-decoration:none;
+color:#ff4b00;
+font-weight:600;
+font-size:15px;
+}
+
+.back-home:hover{
+text-decoration:underline;
+}
+
+/* TITLE */
+h2{
+text-align:center;
+margin-bottom:5px;
+}
+
+.subtitle{
+text-align:center;
+color:#666;
+margin-bottom:25px;
+}
+
+/* INPUTS */
+label{
+display:block;
+margin-top:14px;
+font-weight:600;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ddd;
+border-radius:6px;
+font-size:14px;
+}
+
+input:focus,select:focus{
+outline:none;
+border-color:#ff4b00;
+}
+
+/* LOGIN BUTTON */
+.login-btn{
+width:100%;
+padding:14px;
+margin-top:20px;
+background:#ff4b00;
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+.login-btn:hover{
+opacity:.9;
+}
+
+/* CHECKBOX */
+.checkbox{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:15px;
+font-size:14px;
+}
+
+/* LINKS */
+.links{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+font-size:14px;
+}
+
+.links a{
+color:#ff4b00;
+text-decoration:none;
+font-weight:600;
+}
+
+/* SIGNUP */
+.signup{
+text-align:center;
+margin-top:20px;
+}
+
+.signup a{
+color:#ff4b00;
+font-weight:600;
+text-decoration:none;
+}
+
+/* ERROR */
+.error{
+color:red;
+font-size:13px;
+margin-top:8px;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+
+.login-wrapper{
+padding:30px 20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+<a href="index.html" class="back-home">← Back to Home</a>
+
+<h2>Welcome Back</h2>
+<p class="subtitle">Login to access your BioTech account</p>
+
+<form id="loginForm">
+
+<label>Name</label>
+<input type="text" id="name" required>
+
+<label>Phone Number</label>
+<input type="text" id="phone" maxlength="10" required>
+
+<label>Login As</label>
+<select id="role" required>
+<option value="">Select Role</option>
+<option value="admin">Admin</option>
+<option value="researcher">Researcher</option>
+<option value="patient">Patient</option>
+</select>
+
+<label>Email Address</label>
+<input type="email" required>
+
+<label>Password</label>
+<input type="password" required>
+
+<div class="links">
+<a href="404.html">Forgot Password?</a>
+</div>
+
+<div class="checkbox">
+<input type="checkbox" id="agree">
+<label for="agree">I agree to the Terms & Conditions</label>
+</div>
+
+<div class="error" id="error"></div>
+
+<button class="login-btn">Login to Dashboard</button>
+
+</form>
+
+<div class="signup">
+Don't have an account? <a href="getstarted.html">Sign Up</a>
+</div>
+
+</div>
+
+<script>
+
+/* FORM VALIDATION */
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let role=document.getElementById("role").value;
+let agree=document.getElementById("agree").checked;
+let error=document.getElementById("error");
+
+let nameRegex=/^[A-Za-z ]+$/;
+let phoneRegex=/^[0-9]{10}$/;
+
+if(!nameRegex.test(name)){
+error.innerText="Name must contain letters only";
+return;
+}
+
+if(!phoneRegex.test(phone)){
+error.innerText="Phone number must be exactly 10 digits";
+return;
+}
+
+if(role===""){
+error.innerText="Please select role";
+return;
+}
+
+if(!agree){
+error.innerText="You must agree to the Terms & Conditions";
+return;
+}
+
+/* REDIRECT DASHBOARD */
+
+if(role==="admin"){
+window.location.href="admindashboard.html";
+}
+
+if(role==="researcher"){
+window.location.href="researcher.html";
+}
+
+if(role==="patient"){
+window.location.href="patientsdashboard.html";
+}
+
+});
+
+/* PHONE FIELD → ONLY NUMBERS */
+
+document.getElementById("phone").addEventListener("keypress",function(e){
+
+if(e.key < '0' || e.key > '9'){
+e.preventDefault();
+}
+
+});
+
+/* NAME FIELD → ONLY LETTERS */
+
+document.getElementById("name").addEventListener("keypress",function(e){
+
+if(!/[a-zA-Z ]/.test(e.key)){
+e.preventDefault();
+}
+
+});
+
+</script>
+
+</body>
+</html>
